@@ -51,7 +51,7 @@ vendor: composer.lock
 assets: assets-install assets-dump
 
 assets-install: vendor
-	$(tool) bash -c 'bin/console assets:install web'
+	$(tool) bash -c 'bin/console assets:install public'
 
 assets-dump: node_modules
 	@docker-compose $(dcconf) run --rm npmcua bash -c 'cd /sources && ./node_modules/.bin/encore dev'
