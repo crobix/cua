@@ -1,0 +1,49 @@
+version: '2'
+services:
+  webcua:
+    image: crobix/apache2-php:php73
+    volumes:
+      - ./vhosts/:/etc/apache2/sites-enabled
+      - ../:/sources
+      - ../var/logs:/var/log/apache2
+    environment:
+      VIRTUAL_HOST: "cua.local"
+      PHP_ENV: 'DEV'
+      XDEBUG_CONFIG: "remote_host=172.18.0.1 remote_connect_back=1 profiler_enable=1 remote_autostart=0 remote_enable=1"
+      #XDEBUG_CONFIG: "remote_log=/sources/xdebug.log idekey=sublime.xdebug remote_host=172.18.0.1 remote_connect_back=1 profiler_enable=1 remote_autostart=1 remote_enable=1"
+    dns:
+      - 8.8.8.8
+
+    links:
+      - dbcua
+
+  toolcua:
+    image: crobix/php:php73
+    volumes:
+      - ../:/sources
+      - /usr/local/bin/composer:/usr/local/bin/composer
+    dns:
+      - 8.8.8.8
+    environment:
+      SYMFONY_ENV: 'dev'
+      PHP_ENV: 'DEV'
+      #XDEBUG_CONFIG: "remote_host=172.18.0.1 remote_connect_back=1 profiler_enable=1 remote_autostart=0 remote_enable=1"
+    links:
+      - dbcua
+
+  dbcua:
+    image: mariadb:latest
+    volumes:
+      - ../../db:/var/lib/mysql
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=cua
+
+  npmcua:
+    image: node:latest
+    volumes:
+      - ../:/sources
+    dns:
+      - 8.8.8.8

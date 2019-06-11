@@ -1,41 +1,70 @@
 {
-    "name": "inextenso/cua",
-    "type": "library",
-    "description": "This application can manage many project composer update",
-    "keywords": ["composer", "update", "dependecies", "management"],
-    "homepage": "https://github.com/InExtenso/cua",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jean-Baptiste Nahan",
-            "email": "jean-baptiste.nahan@inextenso.fr"
-        }
-    ],
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.1.3",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "symfony/apache-pack": "^1.0",
+        "symfony/console": "4.3.*",
+        "symfony/dotenv": "4.3.*",
+        "symfony/flex": "^1.1",
+        "symfony/form": "4.3.*",
+        "symfony/framework-bundle": "4.3.*",
+        "symfony/monolog-bundle": "^3.3",
+        "symfony/orm-pack": "^1.0",
+        "symfony/twig-bundle": "4.3.*",
+        "symfony/validator": "4.3.*",
+        "symfony/yaml": "4.3.*"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
-            "InExtenso\\CUA\\": ""
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "InExtenso\\CUA\\Tests\\Units\\": "tests/Units"
+            "App\\Tests\\": "tests/"
         }
     },
-    "bin": ["cua"],
-    "require": {
-        "php": ">=5.6",
-        "symfony/console": "^3.0",
-        "symfony/yaml": "^3.0",
-        "symfony/config": "^3.0",
-        "psr/log": "^1.0",
-        "symfony/process": "^3.0",
-        "symfony/var-dumper": "^3.0",
-        "symfony/finder": "^3.0",
-        "doctrine/dbal": "^2.5"
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "4.3.*"
+        }
     },
     "require-dev": {
-        "atoum/atoum": "^3.0",
-        "atoum/autoloop-extension": "*",
-        "atoum/reports-extension": "*"
+        "symfony/debug-bundle": "4.3.*",
+        "symfony/maker-bundle": "^1.11",
+        "symfony/web-profiler-bundle": "4.3.*"
     }
 }

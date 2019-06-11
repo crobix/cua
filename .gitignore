@@ -1,3 +1,9 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/public/bundles/
+/var/
 /vendor/
-cua.yml
-/build
+###< symfony/framework-bundle ###
